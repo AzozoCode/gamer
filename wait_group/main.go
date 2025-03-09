@@ -15,7 +15,7 @@ func worker(id int) {
 		cond.Wait()
 	}
 	mu.Unlock()
-	fmt.Printf("Worker %d is running\n", id)
+	fmt.Printf("Worker %d started working\n", id)
 }
 
 func main() {
@@ -32,8 +32,7 @@ func main() {
 
 	mu.Lock()
 	ready = true
-	cond.Broadcast() // signal to wake all the gorountines
 	mu.Unlock()
-
+	cond.Broadcast() // wake up all waiting workers
 	wg.Wait()
 }
